@@ -1,3 +1,7 @@
+// ROV CONTROL (UP,DOWN,TURN LEFT,TURN RIGHT,FORWARD,BACKWARDS)
+
+// WITH CLAW CONTROL
+
 #include <SPI.h>
 #include <Ethernet.h>
 #include <Servo.h>
