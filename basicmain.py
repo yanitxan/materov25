@@ -1,3 +1,9 @@
+# BASIC ROV CONTROL (UP,DOWN,TURN LEFT,TURN RIGHT,FORWARD,BACKWARDS)
+
+#WITHOUT CLAW CONTROL
+
+
+
 import pygame
 import socket
 import time
