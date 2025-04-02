@@ -13,11 +13,11 @@ DEAD_ZONE = 0.1
 # init pygame
 pygame.init()
 if pygame.joystick.get_count() == 0:
-    print("No joystick found")
+    print("no joystick found")
     exit()
 joystick = pygame.joystick.Joystick(1)
 joystick.init()
-print("Joystick started")
+print("joystick started")
 
 # button mapping
 UP_BUTTON = 0  
@@ -84,7 +84,7 @@ client_socket = None
 
 while True:
     if client_socket is None:
-        print("Attempting to connect to Arduino...")
+        print("Trying to connect to Arduino...")
         client_socket = connect_to_arduino()
         if client_socket is None:
             print("Retrying connection in 3 seconds...")
