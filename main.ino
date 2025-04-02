@@ -59,7 +59,7 @@ void loop() {
         command += c;
         if (c == '\n') {
           if (command.length() > 0) {
-            Serial.print("Received: ");
+            Serial.print("received: ");
             Serial.println(command);
             int leftMotor, rightMotor, upMotor, downMotor, clawPos;
             int parsed = sscanf(command.c_str(), "L:%d,R:%d,U:%d,D:%d,Claw:%d",
@@ -70,9 +70,9 @@ void loop() {
               setMotor(PWM2, DIR2, rightMotor);
               setVerticalMotors(upMotor, downMotor);
               moveClaw(clawPos);
-              Serial.println("Motor and claw commands executed.");
+              Serial.println("motor and claw commands executed.");
             } else {
-              Serial.println("Failed to parse command!");
+              Serial.println("failed to parse command");
               turnOffMotors();
             }
           }
@@ -82,12 +82,12 @@ void loop() {
 
 
       if (millis() - lastTime > 10000) {
-        Serial.println("No activity detected. Waiting for new data...");
+        Serial.println("no activity detected. waiting for new data...");
       }
     }
 
 
-    Serial.println("Client disconnected.");
+    Serial.println("client disconnected.");
     turnOffMotors();
     delay(100);
   }
