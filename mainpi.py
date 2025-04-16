@@ -3,12 +3,11 @@ import socket
 import time
 import threading
 
-
 MOTORS = {
-    'L': {'PWM': 12, 'DIR': 16},  # left
-    'R': {'PWM': 13, 'DIR': 19},  # right
-    'U': {'PWM': 18, 'DIR': 20},  # up
-    'D': {'PWM': 21, 'DIR': 26},  # down
+    'L': {'PWM': 12, 'DIR': 20},  # left
+    'R': {'PWM': 13, 'DIR': 21},  # right
+    'U': {'PWM': 18, 'DIR': 5},   # up
+    'D': {'PWM': 19, 'DIR': 6},   # down
 }
 
 CLAW_SERVO_PIN = 17  
@@ -20,14 +19,14 @@ if not pi.connected:
     print("failed to connect to pigpio daemon thingy")
     exit()
 
-
+# Set pin modes
 for motor in MOTORS.values():
     pi.set_mode(motor['PWM'], pigpio.OUTPUT)
     pi.set_mode(motor['DIR'], pigpio.OUTPUT)
 
 pi.set_mode(CLAW_SERVO_PIN, pigpio.OUTPUT)
 
-#motor Control
+# motor control
 def set_motor(name, speed):
     motor = MOTORS[name]
     direction = 1 if speed >= 0 else 0
@@ -45,7 +44,7 @@ def move_claw(angle):
     pulse = 500 + (angle / 180) * 2000
     pi.set_servo_pulsewidth(CLAW_SERVO_PIN, pulse)
 
-#watchdog
+# watchdog
 last_command_time = time.time()
 def watchdog():
     global last_command_time
@@ -56,7 +55,7 @@ def watchdog():
 
 threading.Thread(target=watchdog, daemon=True).start()
 
-
+# socket setup
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(('', 8080))
 server.listen(1)
@@ -88,7 +87,7 @@ try:
                 last_command_time = time.time()
 
             except Exception as e:
-                print("rrror:", e)
+                print("errror:", e)
 
 except KeyboardInterrupt:
     print("shutting down")
