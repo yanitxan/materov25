@@ -80,8 +80,9 @@ try:
 
                 set_motor('L', cmd.get("L", 0))
                 set_motor('R', cmd.get("R", 0))
-                set_motor('U', cmd.get("U", 0) if cmd.get("D", 0) == 0 else 0)
-                set_motor('D', cmd.get("D", 0) if cmd.get("U", 0) == 0 else 0)
+                vertical = cmd.get("U", 0) - cmd.get("D", 0)
+                set_motor('U', vertical)
+                set_motor('D', vertical)
                 move_claw(cmd.get("Claw", 90))
 
                 last_command_time = time.time()
