@@ -4,10 +4,10 @@ import time
 import threading
 
 MOTORS = {
-    'L': {'PWM': 12, 'DIR': 20},  # left
+    'L': {'PWM': 19, 'DIR': 6},  # left
     'R': {'PWM': 13, 'DIR': 21},  # right
     'U': {'PWM': 18, 'DIR': 5},   # up
-    'D': {'PWM': 19, 'DIR': 6},   # down
+    'D': {'PWM': 12, 'DIR': 20},   # down
 }
 
 CLAW_SERVO_PIN = 17  
@@ -78,11 +78,16 @@ try:
                 parts = line.strip().split(",")
                 cmd = {p.split(":")[0]: int(p.split(":")[1]) for p in parts}
 
-                set_motor('L', cmd.get("L", 0))
-                set_motor('R', cmd.get("R", 0))
+                L_speed = cmd.get("L", 0)
+                R_speed = -cmd.get("R", 0)  # inverting right thruster
+
+                set_motor('L', L_speed)
+                set_motor('R', R_speed)
+
                 vertical = cmd.get("U", 0) - cmd.get("D", 0)
                 set_motor('U', vertical)
                 set_motor('D', vertical)
+
                 move_claw(cmd.get("Claw", 90))
 
                 last_command_time = time.time()
