@@ -3,24 +3,24 @@ import socket
 import time
 import threading
 
-# ----- Configuration -----
-raspi_ip = "192.168.1.50"  # set this to the Pi's IP address
+# config
+raspi_ip = "192.168.1.50"  # ip
 port = 8080
 DEAD_ZONE = 0.1
 
-# ----- Initialize pygame and the joystick -----
+# init
 pygame.init()
 if pygame.joystick.get_count() == 0:
     print("No joystick found")
     exit()
-# The joystick index might need to be adjusted.
+
 joystick = pygame.joystick.Joystick(0)
 joystick.init()
 print("Joystick started")
 
-# ----- Button mappings for Claw control -----
-UP_BUTTON = 0   # button to increase claw opening
-DOWN_BUTTON = 3 # button to close claw
+
+UP_BUTTON = 0   
+DOWN_BUTTON = 3 
 
 claw_pos = 0
 step_delay = 0.005
@@ -58,7 +58,7 @@ def connect_to_raspi():
         print("Connection error:", e)
         return None
 
-# --- Thread to control the claw continuously ---
+
 def control_claw():
     global claw_pos
     while True:
@@ -76,7 +76,7 @@ def control_claw():
 claw_thread = threading.Thread(target=control_claw, daemon=True)
 claw_thread.start()
 
-# --- Main loop to send commands ---
+# main command sending
 client_socket = None
 
 while True:
